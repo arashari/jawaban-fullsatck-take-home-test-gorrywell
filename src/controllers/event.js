@@ -78,7 +78,71 @@ const create = async (req, res, next) => {
 };
 
 const createTicket = async (req, res, next) => {
-  res.send("create event ticket");
+  try {
+    const { name, quota, price, eventId } = req.body;
+
+    if (!name) {
+      next(new BusinessError(422, "`name` is required"));
+      return;
+    }
+
+    if (!eventId) {
+      next(new BusinessError(422, "`eventId` is required"));
+      return;
+    }
+
+    if (!quota) {
+      next(new BusinessError(422, "`quota` is required"));
+      return;
+    }
+
+    const _quota = parseInt(quota);
+
+    if (!Number.isInteger(_quota)) {
+      next(new BusinessError(422, "`quota` must be an integer"));
+      return;
+    }
+
+    if (!price) {
+      next(new BusinessError(422, "`price` is required"));
+      return;
+    }
+
+    const _price = parseInt(price);
+
+    if (!Number.isInteger(_price)) {
+      next(new BusinessError(422, "`price` must be an integer"));
+      return;
+    }
+
+    try {
+      const data = await EventRepo.createTicket({
+        name,
+        quota: _quota,
+        price: _price,
+        eventId,
+      });
+
+      res.json({
+        code: 200,
+        message: "ticket created",
+        data: {
+          id: data.id,
+          eventId,
+        },
+      });
+    } catch (err) {
+      if (err.message === "event not found") {
+        next(
+          new BusinessError(422, `event with id: \`${eventId}\` is not found`)
+        );
+      } else {
+        next(err);
+      }
+    }
+  } catch (err) {
+    next(err);
+  }
 };
 
 const getInfo = async (req, res, next) => {

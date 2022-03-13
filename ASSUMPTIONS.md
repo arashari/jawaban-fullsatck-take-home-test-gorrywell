@@ -2,3 +2,4 @@
 - tidak menghandle kasus konkurensi
 - tidak menghandle data corrupt (misal foreign key tidak ditemukan)
 - harga tiket tidak dapat diubah setelah dibuat
+- tidak ada pengecekan unique

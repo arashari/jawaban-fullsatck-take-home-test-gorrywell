@@ -5,7 +5,7 @@ import { generateId } from "../../util.js";
 const create = async ({ name, startDate, endDate, locationId }) => {
   // TODO: validating input
 
-  const data = {
+  const event = {
     id: generateId(),
     name,
     startDate, // YYYY-MM-DD HH:mm:ss
@@ -14,13 +14,30 @@ const create = async ({ name, startDate, endDate, locationId }) => {
     tickets: [],
   };
 
-  DB.data.event.push(data);
+  DB.data.event.push(event);
   DB.write();
 
-  return data;
+  return event;
 };
 
-const createTicket = async () => {};
+const createTicket = async ({ name, quota, price, eventId }) => {
+  const event = await findById(eventId);
+  if (!event) {
+    throw new Error("event not found");
+  }
+
+  const ticket = {
+    name,
+    quota,
+    initialQuota: quota,
+    price,
+  };
+
+  event.tickets.push(ticket);
+  DB.write();
+
+  return ticket;
+};
 
 const findById = async (id) => DB.data.event.find((x) => x.id === id);
 
