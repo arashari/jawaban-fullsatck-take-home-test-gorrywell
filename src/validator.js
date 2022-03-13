@@ -1,5 +1,5 @@
 import BusinessError from "./models/BusinessError.js";
-import { isValidEventDate } from "./util.js";
+import { isValidEventDate, isBeforeEventDate } from "./util.js";
 
 const createLocation = (params) => {
   const { name } = params;
@@ -114,6 +114,10 @@ const createEvent = (params) => {
       422,
       "`endDate` wrong format (expected: YYYY-MM-DD HH:mm:ss)"
     );
+  }
+
+  if (!isBeforeEventDate(startDate, endDate)) {
+    throw new BusinessError(422, "`startDate` must be before `endDate`");
   }
 };
 

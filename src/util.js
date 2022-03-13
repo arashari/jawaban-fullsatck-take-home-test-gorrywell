@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { isMatch } from "date-fns";
+import { parse, isMatch, isBefore } from "date-fns";
 
 const generateId = () => crypto.randomUUID();
 const isValidEventDate = (str) => {
@@ -9,5 +9,11 @@ const isValidEventDate = (str) => {
 
   return true;
 };
+const isBeforeEventDate = (start, end) => {
+  return isBefore(
+    parse(start, "yyyy-MM-dd HH:mm:ss", new Date()),
+    parse(end, "yyyy-MM-dd HH:mm:ss", new Date())
+  );
+};
 
-export { generateId, isValidEventDate };
+export { generateId, isValidEventDate, isBeforeEventDate };
