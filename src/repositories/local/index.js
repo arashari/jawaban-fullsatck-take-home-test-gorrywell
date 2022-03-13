@@ -7,9 +7,7 @@ await db.read();
 db.data = db.data || {
   event: [],
   location: [],
-  ticket: [],
   transaction: [],
-  transactionDetail: [],
 };
 
 export default db;
