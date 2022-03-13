@@ -1,0 +1,3 @@
+- boleh memakai embedded database
+- tidak menghandle kasus konkurensi
+- harga tiket tidak dapat diubah setelah dibuat
