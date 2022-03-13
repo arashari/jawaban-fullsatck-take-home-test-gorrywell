@@ -1,53 +1,54 @@
+import BusinessError from "../models/BusinessError.js";
 import LocationRepo from "../repositories/local/location.js";
 
 const create = async (req, res, next) => {
-  const { name } = req.query;
+  try {
+    const { name } = req.body;
 
-  if (!name) {
-    res.status(422).json({
-      code: 422,
-      message: "`name` is required",
+    if (!name) {
+      next(new BusinessError(422, "`name` is required"));
+      return;
+    }
+
+    const data = await LocationRepo.create({ name });
+
+    res.json({
+      code: 200,
+      message: "location created",
+      data: {
+        id: data.id,
+      },
     });
-    return;
+  } catch (err) {
+    next(err);
   }
-
-  const data = await LocationRepo.create({ name });
-
-  res.json({
-    code: 200,
-    message: "location created",
-    data: {
-      id: data.id,
-    },
-  });
 };
 
 const get = async (req, res, next) => {
-  const { id } = req.query;
+  try {
+    const { id } = req.query;
 
-  if (!id) {
-    res.status(422).json({
-      code: 422,
-      message: "`id` is required",
+    if (!id) {
+      next(new BusinessError(422, "`id` is required"));
+
+      return;
+    }
+
+    const data = await LocationRepo.findById(id);
+
+    if (!data) {
+      next(new BusinessError(404, "location not found"));
+      return;
+    }
+
+    res.json({
+      code: 200,
+      message: "location found",
+      data,
     });
-    return;
+  } catch (err) {
+    next(err);
   }
-
-  const data = await LocationRepo.findById(id);
-
-  if (!data) {
-    res.status(404).json({
-      code: 404,
-      message: "location not found",
-    });
-    return;
-  }
-
-  res.json({
-    code: 200,
-    message: "location found",
-    data,
-  });
 };
 
 export default {

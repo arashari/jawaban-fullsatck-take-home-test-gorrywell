@@ -1,5 +1,7 @@
 import express from "express";
 
+import BusinessError from "../models/BusinessError.js";
+
 import event from "./event.js";
 import location from "./location.js";
 import transaction from "./transaction.js";
@@ -16,7 +18,15 @@ router.get("*", (req, res) => {
 
 router.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: err.message || "something wrong" });
+
+  if (err instanceof BusinessError) {
+    res.status(err.code).json({ code: err.code, message: err.message });
+    return;
+  }
+
+  res
+    .status(500)
+    .json({ code: 500, message: err.message || "something wrong" });
 });
 
 export default router;
