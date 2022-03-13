@@ -13,7 +13,7 @@ router.use("/location", location);
 router.use("/transaction", transaction);
 
 router.get("*", (req, res) => {
-  res.status(404).json({ message: "not found" });
+  res.status(404).json({ code: 404, message: "not found" });
 });
 
 router.use((err, req, res, next) => {

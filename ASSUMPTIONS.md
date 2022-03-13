@@ -3,3 +3,6 @@
 - tidak menghandle data corrupt (misal foreign key tidak ditemukan)
 - harga tiket tidak dapat diubah setelah dibuat
 - tidak ada pengecekan unique
+- tidak ada pengecekan customer data
+- purchase hanya mengecek quota ticket saja
+- transaction berupa data historical

@@ -96,10 +96,18 @@ const createTicket = async (req, res, next) => {
       return;
     }
 
-    const _quota = parseInt(quota);
-
-    if (!Number.isInteger(_quota)) {
+    if (typeof quota !== "number") {
       next(new BusinessError(422, "`quota` must be an integer"));
+      return;
+    }
+
+    if (!Number.isInteger(quota)) {
+      next(new BusinessError(422, "`quota` must be an integer"));
+      return;
+    }
+
+    if (!(quota >= 0)) {
+      next(new BusinessError(422, "`quota` must be at least 0"));
       return;
     }
 
@@ -108,18 +116,26 @@ const createTicket = async (req, res, next) => {
       return;
     }
 
-    const _price = parseInt(price);
-
-    if (!Number.isInteger(_price)) {
+    if (typeof price !== "number") {
       next(new BusinessError(422, "`price` must be an integer"));
+      return;
+    }
+
+    if (!Number.isInteger(price)) {
+      next(new BusinessError(422, "`price` must be an integer"));
+      return;
+    }
+
+    if (!(price >= 0)) {
+      next(new BusinessError(422, "`price` must be at least 0"));
       return;
     }
 
     try {
       const data = await EventRepo.createTicket({
         name,
-        quota: _quota,
-        price: _price,
+        quota,
+        price,
         eventId,
       });
 

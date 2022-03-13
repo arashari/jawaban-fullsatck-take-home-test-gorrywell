@@ -27,6 +27,7 @@ const createTicket = async ({ name, quota, price, eventId }) => {
   }
 
   const ticket = {
+    id: generateId(),
     name,
     quota,
     initialQuota: quota,
@@ -42,8 +43,6 @@ const createTicket = async ({ name, quota, price, eventId }) => {
 const findById = async (id) => DB.data.event.find((x) => x.id === id);
 
 const joinWithLocation = async (event) => {
-  // TODO: use functional programming to make it beautiful and elegant
-
   const location = await LocationRepo.findById(event.locationId);
   const _event = { ...event, location };
   delete _event.locationId;
