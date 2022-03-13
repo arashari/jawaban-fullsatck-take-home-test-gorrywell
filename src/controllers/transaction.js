@@ -118,15 +118,10 @@ const getInfo = async (req, res, next) => {
       return;
     }
 
-    const _transaction =
-      await TransactionRepo.joinWithEventAndLocationWithoutEventTicket(
-        transaction
-      );
-
     res.json({
       code: 200,
       message: "transaction found",
-      data: _transaction,
+      data: transaction,
     });
   } catch (err) {
     next(err);

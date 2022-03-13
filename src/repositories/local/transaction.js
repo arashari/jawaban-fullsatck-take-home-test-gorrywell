@@ -12,6 +12,10 @@ const create = async ({ customerName, customerEmail, eventId, tickets }) => {
     throw new Error("event not found");
   }
 
+  const _event = JSON.parse(
+    JSON.stringify(await EventRepo.joinWithLocation(event))
+  ); // get the plain copy
+
   // naive transactional implementation
   const dbCopy = { ...DB.data };
   try {
@@ -19,7 +23,7 @@ const create = async ({ customerName, customerEmail, eventId, tickets }) => {
       id: generateId(),
       customerName,
       customerEmail,
-      eventId,
+      event: _event,
       tickets: [],
     };
 
@@ -61,20 +65,7 @@ const create = async ({ customerName, customerEmail, eventId, tickets }) => {
 
 const findById = async (id) => DB.data.transaction.find((x) => x.id === id);
 
-const joinWithEventAndLocationWithoutEventTicket = async (transaction) => {
-  const event = await EventRepo.joinWithLocation(
-    await EventRepo.findById(transaction.eventId)
-  );
-  delete event.tickets;
-
-  const _transaction = { ...transaction, event };
-  delete _transaction.eventId;
-
-  return _transaction;
-};
-
 export default {
   create,
   findById,
-  joinWithEventAndLocationWithoutEventTicket,
 };
