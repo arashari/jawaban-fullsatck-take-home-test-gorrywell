@@ -1,15 +1,13 @@
 import BusinessError from "../models/BusinessError.js";
 import LocationRepo from "../repositories/local/location.js";
 
+import Validator from "../validator.js";
+
 const create = async (req, res, next) => {
   try {
+    Validator.createLocation(req.body);
+
     const { name } = req.body;
-
-    if (!name) {
-      next(new BusinessError(422, "`name` is required"));
-      return;
-    }
-
     const data = await LocationRepo.create({ name });
 
     res.json({
@@ -26,19 +24,13 @@ const create = async (req, res, next) => {
 
 const get = async (req, res, next) => {
   try {
+    Validator.getLocation(req.query);
+
     const { id } = req.query;
-
-    if (!id) {
-      next(new BusinessError(422, "`id` is required"));
-
-      return;
-    }
-
     const data = await LocationRepo.findById(id);
 
     if (!data) {
-      next(new BusinessError(404, "location not found"));
-      return;
+      throw new BusinessError(404, "location not found");
     }
 
     res.json({
