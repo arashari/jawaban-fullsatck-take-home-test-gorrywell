@@ -92,6 +92,9 @@
 
 lihat [API.md](https://github.com/arashari/jawaban-fullsatck-take-home-test-gorrywell/blob/master/API.md)
 
+- [Postman Collection](https://github.com/arashari/jawaban-fullsatck-take-home-test-gorrywell/blob/master/LoketReservation.postman_collection.json)
+- [Postman Environment](https://github.com/arashari/jawaban-fullsatck-take-home-test-gorrywell/blob/master/LoketReservation.Development.postman_environment.json)
+
 # requirements
 
 - nodejs v13+
@@ -173,7 +176,7 @@ npm i # atau `yarn`
 3. jika dependency sudah berhasil terinstall, jalankan aplikasi dengan menjalankan perintah berikut
 
 ```
-npm run dev # atau `yarn dev`
+npm run start # atau `yarn start`
 ```
 
 _catatan: secara default, aplikasi akan berjalan pada port `3000`_

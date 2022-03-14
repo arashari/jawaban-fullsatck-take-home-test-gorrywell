@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "73eab4da-fd54-4a6f-be29-4e349a85e7a2",
+		"name": "LoketReservation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Event",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Event 1\",\n    \"locationId\": \"f0cd8fb9-fe9d-4d3d-a5af-4811f764e25b\",\n    \"startDate\": \"2022-01-01 00:00:00\",\n    \"endDate\": \"2022-01-01 00:00:01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/event/create",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"event",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event Ticket",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Ticket Silver\",\n    \"eventId\": \"75b07685-0575-4767-acaf-1cd7404a9e7c\",\n    \"quota\": 100,\n    \"price\": 10000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/event/ticket/create",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"event",
+						"ticket",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Event",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/event/get_info?id=75b07685-0575-4767-acaf-1cd7404a9e7c",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"event",
+						"get_info"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "75b07685-0575-4767-acaf-1cd7404a9e7c"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Location",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Lokasi 1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/location/create",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"location",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase Ticket",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerName\": \"Customer 1\",\n    \"customerEmail\": \"customer1@email.com\",\n    \"eventId\": \"75b07685-0575-4767-acaf-1cd7404a9e7c\",\n    \"tickets\": [\n        { \"id\": \"b6f378f4-4791-4ff2-ab8e-05921a85959e\", \"quantity\": 2 },\n        { \"id\": \"bbef12bd-eaa7-41a1-99e6-55a9d24df14c\", \"quantity\": 3 }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/transaction/purchase",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"transaction",
+						"purchase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transaction",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/transaction/get_info?id=aec19398-e2fb-4bf5-b55d-5f0101395336",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"transaction",
+						"get_info"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "aec19398-e2fb-4bf5-b55d-5f0101395336"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
