@@ -8,6 +8,7 @@ const create = async (req, res, next) => {
   try {
     Validator.createEvent(req.body);
 
+    const { name, startDate, endDate, locationId } = req.body;
     if (!(await LocationRepo.findById(locationId))) {
       throw new BusinessError(
         422,
@@ -15,7 +16,6 @@ const create = async (req, res, next) => {
       );
     }
 
-    const { name, startDate, endDate, locationId } = req.body;
     const data = await EventRepo.create({
       name,
       startDate,

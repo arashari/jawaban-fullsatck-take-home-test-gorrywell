@@ -7,6 +7,10 @@ const createLocation = (params) => {
   if (!name) {
     throw new BusinessError(422, "`name` is required");
   }
+
+  if (typeof name !== "string") {
+    throw new BusinessError(422, "`name` must be a string");
+  }
 };
 
 const getLocation = (params) => {
@@ -24,12 +28,24 @@ const purchase = (params) => {
     throw new BusinessError(422, "`customerName` is required");
   }
 
+  if (typeof customerName !== "string") {
+    throw new BusinessError(422, "`customerName` must be a string");
+  }
+
   if (!customerEmail) {
     throw new BusinessError(422, "`customerEmail` is required");
   }
 
+  if (typeof customerEmail !== "string") {
+    throw new BusinessError(422, "`customerEmail` must be a string");
+  }
+
   if (!eventId) {
     throw new BusinessError(422, "`eventId` is required");
+  }
+
+  if (typeof eventId !== "string") {
+    throw new BusinessError(422, "`eventId` must be a string");
   }
 
   if (!tickets) {
@@ -51,25 +67,29 @@ const purchase = (params) => {
     const { id, quantity } = tickets[i];
 
     if (!id) {
-      throw new BusinessError(422, "`tickets` must be contain Ticket object");
+      throw new BusinessError(422, "`tickets.id` is required");
+    }
+
+    if (typeof id !== "string") {
+      throw new BusinessError(422, "`tickets.id` must be string");
     }
 
     if (!quantity) {
-      throw new BusinessError(422, "`tickets` must be contain Ticket object");
+      throw new BusinessError(422, "`tickets.quantity` is required");
     }
 
     if (typeof quantity !== "number") {
-      throw new BusinessError(422, "`tickets` must be contain Ticket object");
+      throw new BusinessError(422, "`tickets.quantity` must be an integer");
     }
 
     if (!Number.isInteger(quantity)) {
-      throw new BusinessError(422, "`tickets` must be contain Ticket object");
+      throw new BusinessError(422, "`tickets.quantity` must be an integer");
     }
 
     if (!(quantity > 0)) {
       throw new BusinessError(
         422,
-        "`tickets` must be contain Ticket with positive quantity"
+        "`tickets.quantity` must be a positive amount"
       );
     }
   }
@@ -90,12 +110,24 @@ const createEvent = (params) => {
     throw new BusinessError(422, "`name` is required");
   }
 
+  if (typeof name !== "string") {
+    throw new BusinessError(422, "`name` must be a string");
+  }
+
   if (!locationId) {
     throw new BusinessError(422, "`locationId` is required");
   }
 
+  if (typeof locationId !== "string") {
+    throw new BusinessError(422, "`locationId` must be a string");
+  }
+
   if (!startDate) {
     throw new BusinessError(422, "`startDate` is required");
+  }
+
+  if (typeof startDate !== "string") {
+    throw new BusinessError(422, "`startDate` must be a string");
   }
 
   if (!isValidEventDate(startDate)) {
@@ -107,6 +139,10 @@ const createEvent = (params) => {
 
   if (!endDate) {
     throw new BusinessError(422, "`endDate` is required");
+  }
+
+  if (typeof endDate !== "string") {
+    throw new BusinessError(422, "`endDate` must be a string");
   }
 
   if (!isValidEventDate(endDate)) {
@@ -128,8 +164,16 @@ const createTicket = (params) => {
     throw new BusinessError(422, "`name` is required");
   }
 
+  if (typeof name !== "string") {
+    throw new BusinessError(422, "`name` must be a string");
+  }
+
   if (!eventId) {
     throw new BusinessError(422, "`eventId` is required");
+  }
+
+  if (typeof eventId !== "string") {
+    throw new BusinessError(422, "`eventId` must be a string");
   }
 
   if (!quota) {

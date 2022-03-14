@@ -7,7 +7,7 @@ const purchase = async (req, res, next) => {
     Validator.purchase(req.body);
 
     try {
-      const { customerName, customerEmail, eventId, tickets } = params;
+      const { customerName, customerEmail, eventId, tickets } = req.body;
 
       const transaction = await TransactionRepo.create({
         customerName,
@@ -32,7 +32,7 @@ const purchase = async (req, res, next) => {
           );
         case "ticket not found":
           // TODO: more helpful message
-          throw new BusinessError(422, "invalid ticket");
+          throw new BusinessError(422, "ticket not found at this event");
         case "ticket quota exceeded":
           // TODO: more helpful message
           throw new BusinessError(422, "ticket quota exceeded");

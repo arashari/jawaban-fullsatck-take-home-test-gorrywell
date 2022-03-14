@@ -6,6 +6,19 @@ import routes from "./routes/index.js";
 const app = express();
 app.use(express.json());
 app.use(routes);
+app.use((err, req, res, next) => {
+  if (err) {
+    // unexpected error
+    console.error(err);
+
+    res
+      .status(500)
+      .json({ code: 500, message: err.message || "something wrong" });
+    return;
+  }
+
+  next();
+});
 
 const port = process.env.PORT || 3000;
 
